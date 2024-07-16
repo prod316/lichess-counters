@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lichess Stats</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        #gamesPlayed {
+            font-size: 60px;
+            color: #c6c6c6;
+        }
+        .hidden {
+            display: none;
+        }
+        h1, h2 {
+            color: white;
+        }
+        label {
+            color: white;
+        }
+        body {
+            background: black;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h1 id="mode">Mode...</h1>
+    <h1 id="gamesPlayed">loading...</h1>
+    <button onclick="refreshData()">start</button>
+    <button onclick="stopRefreshing()">reset</button>
+    <br>
+    <h2 id="message"></h2>
+    <form id="inputs" onsubmit="event.preventDefault(); processInputData()">
+        <h2>Enter the username:</h2>
+        <input type="text" name="player" id="player" required>
+        <h2>Choose the mode:</h2>
+        <select name="mode" id="mode_input" required>
+            <option value="">--Choose an option--</option>
+            <option value="ultraBullet">ultraBullet</option>
+            <option value="bullet">bullet</option>
+            <option value="blitz">blitz</option>
+            <option value="rapid">rapid</option>
+            <option value="classical">classical</option>
+            <option value="storm">storm</option>
+            <option value="racer">racer</option>
+            <option value="streak">streak</option>
+        </select>
+        <h2>How many games do u need?</h2>
+        <input type="number" name="target" id="target" required>
+        <br><br><br>
+        <button type="submit">Submit input</button>
+    </form>
+</center>
+
+
+<script>
+    let refresherId;
+    let initialCount;
+    let player;
+    let mode;
+    let target;
+    let apiUrl;
+
+    const puzzles = ['streak', 'storm', 'racer']
+
+    function getGamesPlayed() {
+        fetch(apiUrl, {
+            headers: {
+                'Accept': 'application/x-ndjson'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (puzzles.includes(mode))
+                    initialCount = data.perfs[mode].runs;
+                else
+                    initialCount = data.stat["count"].all;
+                document.getElementById("message").innerText = `data was loaded - initial count is ${initialCount}`
+            })
+            .catch(error => {
+                console.error('Smth fkd up:', error);
+            });
+    }
+
+    function updateGamesPlayed() {
+        fetch(apiUrl, {
+            headers: {
+                'Accept': 'application/x-ndjson'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                let gamesPlayed;
+                if (puzzles.includes(mode))
+                    gamesPlayed = data.perfs[mode].runs;
+                else
+                    gamesPlayed = data.stat["count"].all;
+                document.getElementById('gamesPlayed').innerText = `${gamesPlayed - initialCount} / ${target}`;
+            })
+            .catch(error => {
+                console.error('Smth fkd up:', error);
+                document.getElementById('gamesPlayed').innerText = 'ERRRROR!!!!';
+            });
+    }
+
+    function resetApiUrl() {
+        if (puzzles.includes(mode))
+            apiUrl = `https://lichess.org/api/user/${player}`
+        else
+            apiUrl = `https://lichess.org/api/user/${player}/perf/${mode}`
+    }
+
+    function refreshData() {
+        updateGamesPlayed();
+        refresherId = setTimeout(refreshData, 1000);
+    }
+
+    function stopRefreshing() {
+        document.getElementById("inputs").classList.remove("hidden");
+        document.getElementById("message").innerText = '';
+        clearTimeout(refresherId);
+    }
+
+    function processInputData() {
+        player = document.getElementById("player").value;
+        mode = document.getElementById("mode_input").value;
+        target = document.getElementById("target").value;
+        document.getElementById('mode').innerText = `${mode}`;
+        resetApiUrl();
+        getGamesPlayed();
+        updateGamesPlayed();
+        document.getElementById("inputs").classList.add("hidden");
+    }
+</script>
+</body>
+</html>
