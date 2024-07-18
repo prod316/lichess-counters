@@ -1,0 +1,29 @@
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+#gamesPlayed {
+    font-size: 60px;
+    color: #c6c6c6;
+}
+.hidden {
+    display: none;
+}
+h1, h2 {
+    color: white;
+}
+label {
+    color: white;
+}
+body {
+    background: black;
+}
