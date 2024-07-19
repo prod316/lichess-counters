@@ -7,11 +7,14 @@
     <link rel="stylesheet" href="css/counters.css">
 </head>
 <body>
+<nav>
+    <a href="index.html">Home</a>
+</nav>
 <center>
     <h1 id="mode">Mode...</h1>
     <h1 id="gamesPlayed">loading...</h1>
-    <button onclick="refreshData()">start</button>
-    <button onclick="stopRefreshing()">reset</button>
+    <button onclick="refreshData()">Start</button>
+    <button onclick="stopRefreshing()">Reset</button>
     <br>
     <h2 id="message"></h2>
     <form id="inputs" onsubmit="event.preventDefault(); processInputData()">
@@ -29,7 +32,7 @@
             <option value="racer">racer</option>
             <option value="streak">streak</option>
         </select>
-        <h2>How many games do u need?</h2>
+        <h2>How many games do you need?</h2>
         <input type="number" name="target" id="target" required>
         <br><br><br>
         <button type="submit">Submit input</button>
