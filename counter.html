@@ -13,9 +13,10 @@
 <center>
     <h1 id="mode">Mode...</h1>
     <h1 id="gamesPlayed">loading...</h1>
-    <button onclick="refreshData()">Start</button>
-    <button onclick="stopRefreshing()">Reset</button>
-    <br>
+    <div id="controls" class="hidden">
+        <button onclick="refreshData()">Start</button>
+        <button onclick="stopRefreshing()">Reset</button>
+    </div>
     <h2 id="message"></h2>
     <form id="inputs" onsubmit="event.preventDefault(); processInputData()">
         <h2>Enter the username:</h2>

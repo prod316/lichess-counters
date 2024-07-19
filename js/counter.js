@@ -61,6 +61,7 @@ function refreshData() {
 
 function stopRefreshing() {
     document.getElementById("inputs").classList.remove("hidden");
+    document.getElementById("controls").classList.add("hidden");
     document.getElementById("message").innerText = '';
     document.getElementById("mode").innerText = 'Mode...';
     document.getElementById("gamesPlayed").innerText = 'loading...';
@@ -76,4 +77,5 @@ function processInputData() {
     getGamesPlayed();
     updateGamesPlayed();
     document.getElementById("inputs").classList.add("hidden");
+    document.getElementById("controls").classList.remove("hidden");
 }
