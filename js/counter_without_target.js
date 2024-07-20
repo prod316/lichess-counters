@@ -74,6 +74,7 @@ function processInputData() {
     resetApiUrl();
     getGamesPlayed();
     updateGamesPlayed();
+    refreshData();
     document.getElementById("inputs").classList.add("hidden");
     document.getElementById("controls").classList.remove("hidden");
 }
