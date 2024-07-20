@@ -2,9 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/counters.css">
+    <title>Lichess Stats</title>
 </head>
 <body>
-    <h1>Coming soon...</h1>
+<nav>
+    <a href="index.html">Home</a>
+</nav>
+<center>
+    <h1 id="mode">Mode...</h1>
+    <table id="stats" class="hidden">
+        <tbody>
+        <tr>
+            <th>Total games</th>
+            <td id="total">0</td>
+        </tr>
+        <tr>
+            <th>Wins</th>
+            <td id="wins">0</td>
+        </tr>
+        <tr>
+            <th>Losses</th>
+            <td id="losses">0</td>
+        </tr>
+        <tr>
+            <th>Draws</th>
+            <td id="draws">0</td>
+        </tr>
+        <tr>
+            <th>Win streak</th>
+            <td id="win-streak">0</td>
+        </tr>
+        <tr>
+            <th>Best win streak</th>
+            <td id="best-win-streak">0</td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="controls" class="hidden">
+        <br><br><br>
+        <button onclick="stopRefreshing()">Reset</button>
+    </div>
+    <h2 id="message"></h2>
+    <form id="inputs" onsubmit="event.preventDefault(); processInputData()">
+        <h2>Enter the username:</h2>
+        <input type="text" name="player" id="player" required>
+        <h2>Choose the mode:</h2>
+        <select name="mode" id="mode_input" required>
+            <option value="">--Choose an option--</option>
+            <option value="ultraBullet">ultraBullet</option>
+            <option value="bullet">bullet</option>
+            <option value="blitz">blitz</option>
+            <option value="rapid">rapid</option>
+            <option value="classical">classical</option>
+        </select>
+        <br><br><br>
+        <button type="submit">Submit input</button>
+    </form>
+</center>
+<script src="js/stats.js"></script>
 </body>
 </html>
